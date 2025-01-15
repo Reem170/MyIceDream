@@ -1,0 +1,59 @@
+﻿@model MyIceDream.Models.Cart
+
+<h1>Din Kurv</h1>
+
+@if (Model.Items.Count > 0)
+{
+    <p>Antal elementer i kurven: @Model.Items.Count</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Produkt</th>
+                <th>Mængde</th>
+                <th>Handling</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productId" value="@item.Product.Id" />
+                            <div class="form-group">
+                                <label for="quantity">Antal</label>
+                                <input type="number" name="quantity" value="1" min="1" max="10" class="form-control" />
+                            </div>
+                          
+                        </form>
+                        <form asp-action="RemoveFromCart" method="post">
+                            <input type="hidden" name="productId" value="@item.ProductId" />
+                            <button type="submit" class="btn btn-danger">Fjern</button>
+                        </form>
+                      
+
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form asp-action="ConfirmOrder" method="post">
+        <div class="form-group">
+            <label for="time">Vælg afhentningstid:</label>
+            <input type="datetime-local" id="pickupTime" name="time" class="form-control"
+                   min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+            @*  <small>Afhentningstiden skal være mindst 15 minutter efter nuværende tid.</small> *@
+        </div>
+        <label for="comment">Kommentar:</label>
+        <textarea id="comment" name="comment" placeholder="Skriv en kommentar her..."></textarea>
+
+        <button type="submit" class="btn btn-primary">Bekræft Bestilling</button>
+    </form>
+}
+else
+{
+    <p>Din kurv er tom</p>
+}

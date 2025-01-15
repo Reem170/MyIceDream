@@ -1,0 +1,36 @@
+﻿@model MyIceDream.Models.OrderConfirmationViewModel
+
+<h1>Ordrebekræftelse</h1>
+
+<p>Tak for din ordre, @Model.CustomerName!</p>
+
+<p>Ordre ID: @Model.OrderId</p>
+<p>Afhentningstid: @Model.Time</p>
+<p>Total pris: @Model.TotalPrice.ToString("DKK")</p>
+
+
+@if (!string.IsNullOrEmpty(Model.Comment))
+{
+    <p><strong>Kommentar:</strong> @Model.Comment</p>
+}
+
+<h2>Produkter</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Produkt</th>
+            <th>Antal</th>
+            <th>Pris</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price.ToString("DKK")</td>
+            </tr>
+        }
+    </tbody>
+</table>

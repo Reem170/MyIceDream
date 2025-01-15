@@ -1,0 +1,23 @@
+﻿@model MyIceDream.Models.OrderConfirmationViewModel
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <p>Order ID: @Model.OrderId</p>
+    <p>Customer Name: @Model.CustomerName</p>
+    <p>Order Time: @Model.Time</p>
+    <p>Total Price: @Model.TotalPrice</p>
+    <h3>Items:</h3>
+    <ul>
+        @foreach (var item in Model.Items)
+        {
+            <li>@item.ProductName - Quantity: @item.Quantity - Price: @item.Price</li>
+        }
+    </ul>
+</div>
+
+<a href="@Url.Action("Index", "Order")" class="btn btn-primary">Back to Orders</a>

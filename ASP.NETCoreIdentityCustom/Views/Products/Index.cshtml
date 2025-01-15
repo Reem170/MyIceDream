@@ -1,0 +1,51 @@
+﻿@model MyIceDream.Models.ProductIndexViewModel
+
+<h1>Produkter</h1>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+{
+    <a href="@Url.Action("Create")" class="btn btn-primary">Create New Product</a>
+}
+
+<form asp-action="Index" method="get">
+    <label for="categoryId">Vælg kategori:</label>
+    <select asp-for="SelectedCategoryId" asp-items="Model.Categories">
+        <option value="">Alle kategorier</option>
+    </select>
+    <input type="submit" value="Filtrér" />
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Navn</th>
+            <th>Pris</th>
+            <th>Kategori</th>
+            <th>Tilgænglighed</th>
+            <th>Handling</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.Category.Name</td>
+                <td>@product.Availability</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@product.Id">Se</a> |
+                    <a asp-action="Edit" asp-route-id="@product.Id">Rediger</a> |
+                    <a asp-action="Delete" asp-route-id="@product.Id">Slet</a> |
+                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                        <input type="hidden" name="productId" value="@product.Id" />
+                        <button type="submit" class="btn btn-primary">Tilføj til Kurv</button>
+                    </form>
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
