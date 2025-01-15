@@ -15,37 +15,90 @@
     <input type="submit" value="Filtrér" />
 </form>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Navn</th>
-            <th>Pris</th>
-            <th>Kategori</th>
-            <th>Tilgænglighed</th>
-            <th>Handling</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model.Products)
-        {
-            <tr>
-                <td>@product.Id</td>
-                <td>@product.Name</td>
-                <td>@product.Price</td>
-                <td>@product.Category.Name</td>
-                <td>@product.Availability</td>
-                <td>
-                    <a asp-action="Details" asp-route-id="@product.Id">Se</a> |
-                    <a asp-action="Edit" asp-route-id="@product.Id">Rediger</a> |
-                    <a asp-action="Delete" asp-route-id="@product.Id">Slet</a> |
-                    <form asp-controller="Cart" asp-action="AddToCart" method="post">
-                        <input type="hidden" name="productId" value="@product.Id" />
-                        <button type="submit" class="btn btn-primary">Tilføj til Kurv</button>
-                    </form>
-
-                </td>
-            </tr>
+<div class="product-cards">
+    @foreach (var product in Model.Products)
+    {
+        <div class="product-card">
+            <div class="product-image">
+                @if (!string.IsNullOrEmpty(product.Image))
+                {
+                    <img src="@product.Image" alt="Product Image"/>
+                }
+                else
+                {
+                    <span>Ingen billede</span>
+                }
+            </div>
+            <div class="product-info">
+                <h5>@product.Name</h5>
+                <p>Pris: @product.Price</p>
+                <p>@if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <span>Kategori: @product.Category.Name</span>
+                    }</p>
+                @* <p>Tilgænglighed: @product.Availability</p> *@
+                <div class="product-actions">
+                    @if (!User.IsInRole("Admin") && !User.IsInRole("Manager"))
+                    {
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="productId" value="@product.Id" />
+                            <button type="submit" class="btn btn-primary">Tilføj til Kurv</button>
+                        </form>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@product.Id">Rediger</a>
+                        <a asp-action="Delete" asp-route-id="@product.Id">Slet</a>
+                    }
+                    
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<head>
+    <style>
+        .product-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
-    </tbody>
-</table>
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Sikrer, at produktkortet fylder hele kortets højde */
+        }
+
+        .product-image {
+            width: 100%;
+            height: 0; /* Start med ingen højde */
+            padding-top: 100%; /* For at skabe en kvadratisk proportion */
+            position: relative;
+        }
+
+        .product-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 10px;
+            background-color: #f9f9f9;
+        }
+
+        .product-actions {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>

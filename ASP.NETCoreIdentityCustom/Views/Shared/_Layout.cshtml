@@ -39,34 +39,19 @@
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Hjem</a>
                         </li>
                        
-                       @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Rolle Adgang
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="" asp-controller="RoleViews" asp-action="Index">Roller</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="RoleViews" asp-action="Manager">Manager</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" asp-area="" asp-controller="RoleViews" asp-action="Admin">Admin</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Order" asp-action="Index">Orders</a>
-                        </li>
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Products" asp-action="Index">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="User" asp-action="Index">Brugere</a>
+                            <a class="nav-link " asp-area="" asp-controller="Order" asp-action="Index">Orders</a>
                         </li>
+                        <li class="nav-item">
+                            @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
+                            {
+                                <a class="nav-link" asp-area="" asp-controller="User" asp-action="Index">Brugere</a>
+                            }
+                        </li>
+
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Privacy">Om Us</a>
                         </li>

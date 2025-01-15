@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyIceDream.Areas.Identity.Data;
 
@@ -11,9 +12,10 @@ using MyIceDream.Areas.Identity.Data;
 namespace MyIceDream.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250115135951_AddImages")]
+    partial class AddImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -465,7 +467,6 @@ namespace MyIceDream.Migrations
                             Id = 5,
                             Availability = true,
                             CategoryId = 1,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Kunafa nabelssia med ost",
                             Price = 50m
                         },
@@ -474,7 +475,6 @@ namespace MyIceDream.Migrations
                             Id = 6,
                             Availability = true,
                             CategoryId = 1,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Tyrkisk baklava",
                             Price = 50m
                         },
@@ -528,7 +528,6 @@ namespace MyIceDream.Migrations
                             Id = 12,
                             Availability = true,
                             CategoryId = 1,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Bubble waffle med nutella, is og frugt",
                             Price = 80m
                         },
@@ -537,7 +536,7 @@ namespace MyIceDream.Migrations
                             Id = 13,
                             Availability = true,
                             CategoryId = 1,
-                            Image = "/images/NoImage.jpeg",
+                            Image = "/images/DubaiChoc.png",
                             Name = "Belgisk waffle",
                             Price = 50m
                         },
@@ -546,7 +545,7 @@ namespace MyIceDream.Migrations
                             Id = 14,
                             Availability = true,
                             CategoryId = 1,
-                            Image = "/images/NoImage.jpeg",
+                            Image = "/images/DubaiChoc.png",
                             Name = "Belgisk waffle med nutella og frugt",
                             Price = 50m
                         },
@@ -555,7 +554,7 @@ namespace MyIceDream.Migrations
                             Id = 15,
                             Availability = true,
                             CategoryId = 1,
-                            Image = "/images/NoImage.jpeg",
+                            Image = "/images/DubaiChoc.png",
                             Name = "Belgisk waffle med nutella og is",
                             Price = 60m
                         },
@@ -564,7 +563,7 @@ namespace MyIceDream.Migrations
                             Id = 16,
                             Availability = true,
                             CategoryId = 1,
-                            Image = "/images/NoImage.jpeg",
+                            Image = "/images/DubaiChoc.png",
                             Name = "Belgisk waffle med nutella, is og frugt",
                             Price = 70m
                         },
@@ -627,7 +626,6 @@ namespace MyIceDream.Migrations
                             Id = 23,
                             Availability = true,
                             CategoryId = 2,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Is box - 0.75 liter (3 smage)",
                             Price = 115m
                         },
@@ -636,7 +634,6 @@ namespace MyIceDream.Migrations
                             Id = 24,
                             Availability = true,
                             CategoryId = 2,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Is box - 1 liter (4 smage)",
                             Price = 145m
                         },
@@ -645,7 +642,6 @@ namespace MyIceDream.Migrations
                             Id = 25,
                             Availability = true,
                             CategoryId = 2,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Is box - 1.5 liter (5 smage)",
                             Price = 190m
                         },
@@ -699,7 +695,6 @@ namespace MyIceDream.Migrations
                             Id = 31,
                             Availability = true,
                             CategoryId = 3,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Espresso",
                             Price = 25m
                         },
@@ -708,7 +703,6 @@ namespace MyIceDream.Migrations
                             Id = 32,
                             Availability = true,
                             CategoryId = 3,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Cappuccino",
                             Price = 45m
                         },
@@ -717,7 +711,6 @@ namespace MyIceDream.Migrations
                             Id = 33,
                             Availability = true,
                             CategoryId = 3,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Kaffe latte",
                             Price = 45m
                         },
@@ -726,7 +719,6 @@ namespace MyIceDream.Migrations
                             Id = 34,
                             Availability = true,
                             CategoryId = 3,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Chai latte",
                             Price = 45m
                         },
@@ -735,7 +727,6 @@ namespace MyIceDream.Migrations
                             Id = 35,
                             Availability = true,
                             CategoryId = 3,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Matcha latte",
                             Price = 50m
                         },
@@ -744,7 +735,6 @@ namespace MyIceDream.Migrations
                             Id = 36,
                             Availability = true,
                             CategoryId = 3,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Te",
                             Price = 25m
                         },
@@ -762,7 +752,6 @@ namespace MyIceDream.Migrations
                             Id = 38,
                             Availability = true,
                             CategoryId = 3,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Varm kakao",
                             Price = 35m
                         },
@@ -771,7 +760,6 @@ namespace MyIceDream.Migrations
                             Id = 39,
                             Availability = true,
                             CategoryId = 3,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Macchiato",
                             Price = 40m
                         },
@@ -780,7 +768,6 @@ namespace MyIceDream.Migrations
                             Id = 40,
                             Availability = true,
                             CategoryId = 4,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Bubble tea med frugt",
                             Price = 55m
                         },
@@ -789,7 +776,6 @@ namespace MyIceDream.Migrations
                             Id = 41,
                             Availability = true,
                             CategoryId = 4,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Bubble tea med mælk tapioka",
                             Price = 60m
                         },
@@ -816,7 +802,6 @@ namespace MyIceDream.Migrations
                             Id = 44,
                             Availability = true,
                             CategoryId = 4,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Matcha",
                             Price = 50m
                         },
@@ -825,7 +810,6 @@ namespace MyIceDream.Migrations
                             Id = 45,
                             Availability = true,
                             CategoryId = 4,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Lemonade",
                             Price = 45m
                         },
@@ -834,7 +818,6 @@ namespace MyIceDream.Migrations
                             Id = 46,
                             Availability = true,
                             CategoryId = 4,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Iskaffe",
                             Price = 40m
                         },
@@ -843,7 +826,6 @@ namespace MyIceDream.Migrations
                             Id = 47,
                             Availability = true,
                             CategoryId = 4,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Sodavand",
                             Price = 20m
                         },
@@ -852,7 +834,6 @@ namespace MyIceDream.Migrations
                             Id = 48,
                             Availability = true,
                             CategoryId = 4,
-                            Image = "/images/NoImage.jpeg",
                             Name = "Vand",
                             Price = 15m
                         });

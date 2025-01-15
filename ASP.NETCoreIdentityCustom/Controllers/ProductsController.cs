@@ -45,9 +45,6 @@ namespace MyIceDream.Controllers
             };
            
             return View(model);
-            //ViewBag.Categories = new SelectList(_context.Categories, "Id", "Name");
-            //ViewBag.SelectedCategoryId = categoryId.Value;
-            //return View(await products.ToListAsync());
 
         }
 
@@ -69,7 +66,7 @@ namespace MyIceDream.Controllers
         [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name");
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             return View();
         }
 
@@ -81,30 +78,67 @@ namespace MyIceDream.Controllers
         {
             if (ModelState.IsValid)
             {
-                var files = HttpContext.Request.Form.Files;
-
-                if (files.Count > 0)
+                try
                 {
-                    string fileName = Guid.NewGuid().ToString();
-                    var uploads = Path.Combine(@"images");
-                    var extension = Path.GetExtension(files[0].FileName);
+                    var files = HttpContext.Request.Form.Files;
 
-                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    if (files.Count > 0)
                     {
-                        files[0].CopyTo(fileStream);
+                        string fileName = Guid.NewGuid().ToString();
+                        var uploads = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+
+                        if (!Directory.Exists(uploads))
+                        {
+                            Directory.CreateDirectory(uploads);
+                        }
+
+                        var extension = Path.GetExtension(files[0].FileName);
+
+                        using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+
+                        product.Image = $"/images/{fileName}{extension}";
                     }
 
-                    product.Image = @"\images\" + fileName + extension;
-
+                    _context.Products.Add(product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-
-                _context.Products.Add(product);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                catch (Exception ex)
+                {
+                    // Log error, e.g.:
+                    Console.WriteLine($"Error saving product: {ex.Message}");
+                    ModelState.AddModelError("", "An error occurred while saving the product. Please try again.");
+                }
             }
-            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
-            return View(product);
+            //if (ModelState.IsValid)
+            //{
+            //    var files = HttpContext.Request.Form.Files;
 
+
+            //    if (files.Count > 0)
+            //    {
+            //        string fileName = Guid.NewGuid().ToString();
+            //        var uploads = Path.Combine(@"images");
+            //        var extension = Path.GetExtension(files[0].FileName);
+
+            //        using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+            //        {
+            //            files[0].CopyTo(fileStream);
+            //        }
+
+            //        product.Image = @"\images\" + fileName + extension;
+
+            //    }
+
+            //    _context.Products.Add(product);
+            //    _context.SaveChanges();
+            //    return RedirectToAction(nameof(Index));
+            //}
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+            return View(product);
 
 
         }
@@ -177,16 +211,6 @@ namespace MyIceDream.Controllers
             }
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
-
-            //var existingProduct = _context.Products.FirstOrDefault(p => p.Id == id);
-            //if (existingProduct == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //existingProduct.Name = updatedProduct.Name;
-            //existingProduct.Price = updatedProduct.Price;
-            //return RedirectToAction(nameof(Index));
         }
 
         // GET: Product/Delete/{id}
@@ -215,23 +239,7 @@ namespace MyIceDream.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        //[HttpGet]
-        //public IActionResult AddToCart(int productId)
-        //{
-        //    // Eksempel på logik for at tilføje et produkt til kurven
-        //    var product = _context.Products.FirstOrDefault(p => p.Id == productId);
-        //    if (product == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    _cartService.AddToCart(product, 1);
-
-        //    // Omstil til kurvsiden eller produktsiden
-        //    return RedirectToAction("Index", "Cart");
-        //}
-
-
+        
         private bool ProductExists(int id)
         {
             return _context.Products.Any(e => e.Id == id);
