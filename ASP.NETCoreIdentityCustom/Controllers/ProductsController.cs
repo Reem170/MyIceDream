@@ -70,8 +70,7 @@ namespace MyIceDream.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Product product)
         {
-            //if (ModelState.IsValid)
-            //{
+            
                 try
                 {
                     var files = HttpContext.Request.Form.Files;
@@ -105,7 +104,7 @@ namespace MyIceDream.Controllers
                     Console.WriteLine($"Error saving product: {ex.Message}");
                     ModelState.AddModelError("", "An error occurred while saving the product. Please try again.");
                 }
-          //  }
+         
           
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
@@ -140,8 +139,7 @@ namespace MyIceDream.Controllers
             {
                 return NotFound();
             }
-            //if (ModelState.IsValid)
-            //{
+      
 
                 try
                 {
@@ -183,7 +181,7 @@ namespace MyIceDream.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            //}
+            
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
@@ -201,7 +199,6 @@ namespace MyIceDream.Controllers
 
 
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             var product = _context.Products.FirstOrDefault(p => p.Id == id);
@@ -211,6 +208,7 @@ namespace MyIceDream.Controllers
             }
 
             _context.Products.Remove(product);
+            _context.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
 
