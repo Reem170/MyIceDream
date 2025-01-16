@@ -68,10 +68,10 @@ namespace MyIceDream.Controllers
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id, Name, Image, Price, CategoryId, Availability")] Product product)
+        public async Task<IActionResult> Create(Product product)
         {
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
                 try
                 {
                     var files = HttpContext.Request.Form.Files;
@@ -105,7 +105,7 @@ namespace MyIceDream.Controllers
                     Console.WriteLine($"Error saving product: {ex.Message}");
                     ModelState.AddModelError("", "An error occurred while saving the product. Please try again.");
                 }
-            }
+          //  }
           
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
@@ -133,15 +133,15 @@ namespace MyIceDream.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Image, Price, CategoryId, Availability")] Product product)
+   
+        public async Task<IActionResult> Edit(int id,Product product)
         {
             if (id != product.Id)
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
-            {
+            //if (ModelState.IsValid)
+            //{
 
                 try
                 {
@@ -162,7 +162,13 @@ namespace MyIceDream.Controllers
                         product.Image = @"\images\" + fileName + extension;
                     }
 
-                    _context.Update(product);
+                if (!_context.Categories.Any(c => c.Id == product.CategoryId))
+                {
+                    ModelState.AddModelError("CategoryId", "Selected category does not exist.");
+                    ViewBag.CategoryList = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
+                    return View(product);
+                }
+                _context.Update(product);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -177,7 +183,7 @@ namespace MyIceDream.Controllers
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
+            //}
             ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "Name", product.CategoryId);
             return View(product);
         }
