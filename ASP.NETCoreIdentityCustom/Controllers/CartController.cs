@@ -65,15 +65,15 @@ namespace MyIceDream.Controllers
             var cart = _cartService.GetCart();
             var totalPrice = cart.Items.Sum(item => item.Product.Price * item.Quantity);
 
-            var loyaltyPoints = (int)(totalPrice / 100) * 50; // 50 points per 100 kr. i samlet pris
+            var loyaltyPoints = (int)(totalPrice / 100) * 15; // 15 points per 100 kr. i samlet pris
 
             var existingPoints = _context.Orders
                             .Where(o => o.UserId == userId)
                             .Sum(o => o.LoyaltyPoints);
 
-            // Tilføj de nye beregnede loyalitetspoint
+
             loyaltyPoints += existingPoints;
-            // Hvis gyldig, gem afhentningstiden i ordren
+
             var order = new Order
             {
                 Time = time,
@@ -92,14 +92,12 @@ namespace MyIceDream.Controllers
 
             };
 
-            // Gem ordren i databasen 
             _context.Orders.Add(order);
             _context.SaveChanges();
 
             _cartService.ClearCart();
 
             return RedirectToAction("OrderConfirmation", new { orderId = order.Id });
-            //return RedirectToAction("OrderConfirmation");
         }
 
         public IActionResult OrderConfirmation(int orderId)
@@ -120,7 +118,6 @@ namespace MyIceDream.Controllers
                     Comment = o.Comment,
                     Items = o.Items.Select(item => new OrderItemViewModel
                     {
-                      //  Product = item.Product,
                        ProductName = item.Product.Name,
                         Price = item.Price,
                         Quantity = item.Quantity

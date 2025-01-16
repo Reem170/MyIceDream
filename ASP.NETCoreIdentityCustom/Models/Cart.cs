@@ -8,7 +8,6 @@ namespace MyIceDream.Models
         public int Id { get; set;  }
         public List<CartItem> Items { get; set; } = new List<CartItem>();
 
-        //Metode til at tilføje eller opdatere en vare i kurven
         public void AddOrUpdate(int productId, int quantity)
         {
             var item = Items.FirstOrDefault(i => i.ProductId == productId);

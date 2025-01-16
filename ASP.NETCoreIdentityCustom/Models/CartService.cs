@@ -14,7 +14,6 @@ namespace MyIceDream.Models
             _context = context;
         }
 
-        // Hent eller opret en kurv i sessionen
         public Cart GetCart()
         {
             var cart = _httpContextAccessor.HttpContext.Session.Get<Cart>("Cart");
@@ -31,19 +30,15 @@ namespace MyIceDream.Models
             return cart;
         }
 
-        // Tilføj en vare til kurven
+
         public void AddToCart(int productId, int quantity)
         {
             var cart = GetCart();
             cart.AddItem(productId, quantity);
-            //cart.AddOrUpdate(productId, quantity);
             _httpContextAccessor.HttpContext.Session.Set("Cart", cart);
         }
 
-        //internal void AddToCart(Product product, int quantity)
-        //{
-        //    throw new NotImplementedException();
-        //}
+
 
         public void RemoveFromCart(int productId)
         {
@@ -60,9 +55,6 @@ namespace MyIceDream.Models
         internal void ClearCart()
         {
             _httpContextAccessor.HttpContext.Session.Remove("Cart");
-            //var cart = GetCart();
-            //cart.Items.Clear();
-            //SaveCart(cart);
         }
     }
 

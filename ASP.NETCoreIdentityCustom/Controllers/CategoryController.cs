@@ -20,7 +20,7 @@ namespace MyIceDream.Controllers
         }
 
 
-        // GET: Category/Details/5
+
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,13 +39,12 @@ namespace MyIceDream.Controllers
             return View(category);
         }
 
-        // GET: Category/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Category/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description")] Category category)
@@ -59,7 +58,6 @@ namespace MyIceDream.Controllers
             return View(category);
         }
 
-        // GET: Category/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -75,7 +73,6 @@ namespace MyIceDream.Controllers
             return View(category);
         }
 
-        // POST: Category/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description")] Category category)
@@ -108,7 +105,6 @@ namespace MyIceDream.Controllers
             return View(category);
         }
 
-        // GET: Category/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,7 +122,6 @@ namespace MyIceDream.Controllers
             return View(category);
         }
 
-        // POST: Category/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

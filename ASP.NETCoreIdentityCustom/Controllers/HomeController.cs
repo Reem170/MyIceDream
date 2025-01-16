@@ -26,9 +26,6 @@ namespace MyIceDream.Controllers
 
             return View(Category);
         }
-
-
-        // GET: Home/Category/5
         public async Task<IActionResult> Categories(int id)
         {
             var kategori = await _context.Categories
@@ -43,7 +40,6 @@ namespace MyIceDream.Controllers
             return View(kategori);
         }
 
-        // GET: Home/Product/5
         public async Task<IActionResult> Product(int id)
         {
             var product = await _context.Products

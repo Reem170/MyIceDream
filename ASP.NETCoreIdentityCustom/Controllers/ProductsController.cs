@@ -19,9 +19,6 @@ namespace MyIceDream.Controllers
             
         }
 
-
-        // GET: Product
-
         public async Task<IActionResult> Index(int? SelectedCategoryId)
         {
             IQueryable<Product> products = _context.Products.Include(p => p.Category);
@@ -48,8 +45,6 @@ namespace MyIceDream.Controllers
 
         }
 
-
-        // GET: Product/Details/{id}
         public IActionResult Details(int id)
         {
             var product = _context.Products
@@ -62,7 +57,6 @@ namespace MyIceDream.Controllers
             return View(product);
         }
 
-        // GET: Product/Create
         [Authorize(Roles = "Admin,Manager")]
         public IActionResult Create()
         {
@@ -70,7 +64,7 @@ namespace MyIceDream.Controllers
             return View();
         }
 
-        // POST: Product/Create
+
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
@@ -108,42 +102,18 @@ namespace MyIceDream.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Log error, e.g.:
                     Console.WriteLine($"Error saving product: {ex.Message}");
                     ModelState.AddModelError("", "An error occurred while saving the product. Please try again.");
                 }
             }
-            //if (ModelState.IsValid)
-            //{
-            //    var files = HttpContext.Request.Form.Files;
-
-
-            //    if (files.Count > 0)
-            //    {
-            //        string fileName = Guid.NewGuid().ToString();
-            //        var uploads = Path.Combine(@"images");
-            //        var extension = Path.GetExtension(files[0].FileName);
-
-            //        using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
-            //        {
-            //            files[0].CopyTo(fileStream);
-            //        }
-
-            //        product.Image = @"\images\" + fileName + extension;
-
-            //    }
-
-            //    _context.Products.Add(product);
-            //    _context.SaveChanges();
-            //    return RedirectToAction(nameof(Index));
-            //}
+          
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", product.CategoryId);
             return View(product);
 
 
         }
 
-        // GET: Product/Edit/{id}
+
         [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -161,7 +131,6 @@ namespace MyIceDream.Controllers
             return View(product);
         }
 
-        // POST: Product/Edit/{id}
         [HttpPost]
         [Authorize(Roles = "Admin,Manager")]
         [ValidateAntiForgeryToken]
@@ -213,7 +182,7 @@ namespace MyIceDream.Controllers
             return View(product);
         }
 
-        // GET: Product/Delete/{id}
+
         public IActionResult Delete(int id)
         {
             var product = _context.Products.FirstOrDefault(p => p.Id == id);
@@ -224,7 +193,7 @@ namespace MyIceDream.Controllers
             return View(product);
         }
 
-        // POST: Product/Delete/{id}
+
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

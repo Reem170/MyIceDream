@@ -43,7 +43,10 @@
                             <a class="nav-link " asp-area="" asp-controller="Products" asp-action="Index">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Order" asp-action="Index">Orders</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link" asp-area="" asp-controller="Order" asp-action="Index">Orders</a>
+                            }
                         </li>
                         <li class="nav-item">
                             @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
@@ -59,9 +62,7 @@
                             <a class="nav-item" asp-area="" asp-controller="Cart" asp-action="Index">Kurv</a>
 
                         </li>
-                      @*   <li>
-                            <a href="@Url.Action("Index", "Cart")">Din Kurv</a>
-                        </li> *@
+               
                     </ul>
                 </div>
                 <partial name="_LoginPartial"/>

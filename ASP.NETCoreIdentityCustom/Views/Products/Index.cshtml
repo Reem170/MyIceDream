@@ -36,7 +36,6 @@
                     {
                         <span>Kategori: @product.Category.Name</span>
                     }</p>
-                @* <p>Tilgænglighed: @product.Availability</p> *@
                 <div class="product-actions">
                     @if (!User.IsInRole("Admin") && !User.IsInRole("Manager"))
                     {
@@ -71,13 +70,13 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            height: 100%; /* Sikrer, at produktkortet fylder hele kortets højde */
+            height: 100%; 
         }
 
         .product-image {
             width: 100%;
-            height: 0; /* Start med ingen højde */
-            padding-top: 100%; /* For at skabe en kvadratisk proportion */
+            height: 0; 
+            padding-top: 100%; 
             position: relative;
         }
 

@@ -30,13 +30,23 @@ namespace MyIceDream.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var orders = _context.Orders
-                .Where(o => o.UserId == userId)
-                .Include(o => o.Items)
-                .ThenInclude(item => item.Product)
-                .ToList();
+            var isAdmin = _httpContextAccessor.HttpContext?.User.IsInRole("Admin") ?? false;
+            var isManager = _httpContextAccessor.HttpContext?.User.IsInRole("Manager") ?? false;
 
-            return View(orders);
+            IQueryable<Order> query = _context.Orders.Include(o => o.Items).ThenInclude(i => i.Product);
+
+            if (isAdmin || isManager)
+            {
+                // Hvis brugeren er admin eller manager, vis alle ordrer
+                var allOrders = query.ToList();
+                return View(allOrders);
+            }
+            else
+            {
+                // Hvis brugeren er almindelig bruger, vis kun brugerens egne ordrer
+                var userOrders = query.Where(o => o.UserId == userId).ToList();
+                return View(userOrders);
+            }
         }
         public IActionResult Details(int id)
         {

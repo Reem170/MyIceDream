@@ -100,12 +100,6 @@ namespace MyIceDream.Controllers
             }
 
             var userRolesInDb = await _signInManager.UserManager.GetRolesAsync(user);
-
-            //Loop through the roles in ViewModel
-            //Check if the Role is Assigned In DB
-            //If Assigned -> Do Nothing
-            //If Not Assigned -> Add Role
-
             var rolesToAdd = new List<string>();
             var rolesToDelete = new List<string>();
 

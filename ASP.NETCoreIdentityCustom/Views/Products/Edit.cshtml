@@ -1,10 +1,7 @@
 ﻿@model MyIceDream.Models.Product
 
 <h1>Edit Product</h1>
-@* @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
-{
-    <a href="@Url.Action("Create")" class="btn btn-primary">Edit</a>
-} *@
+
 <form asp-action="Edit" method="post">
     <input asp-for="Id" type="hidden" />
     <div class="form-group">
